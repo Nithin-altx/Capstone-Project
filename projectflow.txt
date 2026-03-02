@@ -32,7 +32,6 @@
 20. DVC pipeline is ready to run - dvc repro
 21. Once do - dvc status
 22. git add - commit - push
-
 23. Need to add S3 as remote storage - Create IAM User(keep cred) and S3 bucket
 24. pip install - dvc[s3] & awscli
 25. Checking/deleting dvc remote (optional) - [dvc remote list & dvc remote remove <name>] 
