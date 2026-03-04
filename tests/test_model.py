@@ -39,7 +39,7 @@ class TestModelLoading(unittest.TestCase):
         cls.holdout_data = pd.read_csv('data/processed/test_bow.csv')
 
     @staticmethod
-    def get_latest_model_version(model_name, stage="Staging"):
+    def get_latest_model_version(model_name, stage=None):
       client = mlflow.MlflowClient()
     # Get all versions of the model
       latest_versions = client.search_model_versions(
