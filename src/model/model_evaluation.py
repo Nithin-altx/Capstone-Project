@@ -163,7 +163,7 @@ def main():
                 sk_model=clf,
                 # name="model",
                 artifact_path="model", 
-                serialization_format="skops",
+                serialization_format="pickle",
                 registered_model_name="my_model"  
             )
             from mlflow.tracking import MlflowClient
