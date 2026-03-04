@@ -51,7 +51,7 @@ def apply_bow(train_data: pd.DataFrame, test_data: pd.DataFrame, max_features: i
         y_test = test_data['sentiment'].values
 
         X_train_bow = vectorizer.fit_transform(X_train)
-        X_test_bow = vectorizer.transform(X_test)
+        X_test_bow = vectorizer.fit_transform(X_test)
 
         train_df = pd.DataFrame(X_train_bow.toarray())
         train_df['label'] = y_train
@@ -81,7 +81,7 @@ def main():
     try:
         # params = load_params('params.yaml')
         # max_features = params['feature_engineering']['max_features']
-        max_features = 20
+        max_features = 50
 
         train_data = load_data('./data/interim/train_processed.csv')
         test_data = load_data('./data/interim/test_processed.csv')

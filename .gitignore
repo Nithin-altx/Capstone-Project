@@ -5,6 +5,8 @@ __pycache__/
 cred.txt
 # C extensions
 *.so
+.data/
+.models/
 
 # Distribution / packaging
 .Python
