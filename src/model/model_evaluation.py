@@ -164,7 +164,7 @@ def main():
                 # name="model",
                 artifact_path="model", 
                 serialization_format="pickle",
-                registered_model_name="my_model"  
+                # registered_model_name="my_model"  
             )
             from mlflow.tracking import MlflowClient
 
