@@ -161,7 +161,8 @@ def main():
             # Log artifacts
             mlflow.sklearn.log_model(
                 sk_model=clf,
-                name="model",
+                # name="model",
+                artifact_path="model", 
                 serialization_format="skops",
                 registered_model_name="my_model"  
             )
