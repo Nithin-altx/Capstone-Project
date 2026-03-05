@@ -1,10 +1,10 @@
-# promote model
-
 import os
 import mlflow
+from mlflow.tracking import MlflowClient
 
 def promote_model():
-    # Set up DagsHub credentials for MLflow tracking
+
+    # DagsHub credentials
     dagshub_token = os.getenv("CAPSTONE_TEST")
     if not dagshub_token:
         raise EnvironmentError("CAPSTONE_TEST environment variable is not set")
@@ -16,31 +16,29 @@ def promote_model():
     repo_owner = "nithinemmadishetti25"
     repo_name = "Capstone-Project"
 
-    # Set up MLflow tracking URI
-    mlflow.set_tracking_uri(f'{dagshub_url}/{repo_owner}/{repo_name}.mlflow')
+    # Set MLflow tracking URI
+    mlflow.set_tracking_uri(f"{dagshub_url}/{repo_owner}/{repo_name}.mlflow")
 
-    client = mlflow.MlflowClient()
-
+    client = MlflowClient()
     model_name = "my_model"
-    # Get the latest version in staging
-    latest_version_staging = client.get_latest_versions(model_name, stages=["Staging"])[0].version
 
-    # Archive the current production model
-    prod_versions = client.get_latest_versions(model_name, stages=["Production"])
-    for version in prod_versions:
-        client.transition_model_version_stage(
-            name=model_name,
-            version=version.version,
-            stage="Archived"
-        )
+    # Get all model versions
+    versions = client.search_model_versions(f"name='{model_name}'")
 
-    # Promote the new model to production
-    client.transition_model_version_stage(
+    if not versions:
+        raise Exception("No model versions found")
+
+    # Get latest version
+    latest_version = max(int(v.version) for v in versions)
+
+    # Assign alias "champion" (production)
+    client.set_registered_model_alias(
         name=model_name,
-        version=latest_version_staging,
-        stage="Production"
+        alias="champion",
+        version=latest_version
     )
-    print(f"Model version {latest_version_staging} promoted to Production")
+
+    print(f"Model version {latest_version} promoted to alias 'champion'")
 
 if __name__ == "__main__":
     promote_model()
