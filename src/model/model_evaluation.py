@@ -172,7 +172,7 @@ def main():
 
 # Get latest version properly (safe method)
             latest_versions = client.search_model_versions("name='my_model'")
-            latest_version = max([int(mv.version) for mv in latest_versions])
+            latest_version = str(max([int(mv.version) for mv in latest_versions]))
 
 # Assign alias (NEW METHOD)
             client.set_registered_model_alias(
